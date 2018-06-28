@@ -43,6 +43,10 @@ func NewClient(apiKey string) (*Client, error) {
 	return client, nil
 }
 
+func (c *Client) OpenOrders() ([]*goup.Order, error) {
+	return nil, errors.New("not implemented")
+}
+
 func (c *Client) AllSymbols() ([]goup.CurrencyPair, error) {
 	rsp, err := c.get("/v1/market/trading_pairs")
 
@@ -94,9 +98,9 @@ func (c *Client) GetOrder(orderID string, pair goup.CurrencyPair) (*goup.Order, 
 	}
 
 	if order.Side == "ask" {
-		ord.Side = goup.SELL
+		ord.Side = goup.Sell
 	} else {
-		ord.Side = goup.BUY
+		ord.Side = goup.Buy
 	}
 
 	return ord, nil
@@ -308,7 +312,7 @@ func (c *Client) LimitBuy(amount, price float64, pair goup.CurrencyPair) (*goup.
 		// CreateTime int64 // in ms
 		// FinishTime int64
 		Currency: pair,
-		Side:     goup.BUY,
+		Side:     goup.Buy,
 	}
 
 	switch order.State {

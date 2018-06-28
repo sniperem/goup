@@ -17,8 +17,9 @@ type API interface {
 	MarketBuy(amount, price float64, pair CurrencyPair) (*Order, error)
 	MarketSell(amount, price float64, pair CurrencyPair) (*Order, error)
 	CancelOrder(orderID string, pair CurrencyPair) (bool, error)
+	// GetOrder get detail of single order
 	GetOrder(orderID string, pair CurrencyPair) (*Order, error)
-	//OpenOrders(pair CurrencyPair) ([]Order, error)
+	OpenOrders(pair CurrencyPair) ([]*Order, error)
 	GetOrderHistory(pair CurrencyPair, currentPage, pageSize int) ([]Order, error)
 	GetAccount() (*Account, error)
 	// AllSymbols lists all supported symbols of exchange
@@ -30,8 +31,9 @@ type API interface {
 
 	// WsDepth gets latest order book of specified symbol via websocket
 	WsDepth(pair CurrencyPair, handler func(*Depth)) error
-	// WsTrades gets trade info via websocket
+	// WsTrades gets updates of trade info via websocket
 	WsTrades(pair CurrencyPair, handler func([]*Trade)) error
+	// WsKlines gets updates of kline via websocket
 	WsKlines(pair CurrencyPair, interval KlineInterval, handler func(*Kline)) error
 	ExchangeName() string
 }
